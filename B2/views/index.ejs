@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Index</title>
+</head>
+<body>
+    <table class="table table-inverse">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Gender</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i=0; i< users.length; i++){ %>
+            <tr>
+                <td><%=users[i].username%></td>
+                <td><%=users[i].email%></td>
+                <td><%=users[i].age%></td>
+                <td><%=users[i].gender==0? 'Nữ' : 'Nam' %></td>
+                <td>
+                        <a href="/?action=edit&username=<%=users[i].username%>"><button type="button" class="btn btn-primary">Sửa</button></a>
+                        <a href="/delete?username=<%=users[i].username%>"><button type="button" class="btn btn-danger">Xóa</button></a>
+                        <a href="/gallery?username=<%=users[i].username%>"><button type="button" class="btn btn-success">Thư Viện</button></a>
+                        
+                        
+                </td>
+            </tr>
+            
+            <%}%>
+        </tbody>
+    </table>
+
+    <% if(req.query.action != 'edit') {%>
+    <h4 class="text-primary text-center">Thêm một người dùng mới</h4>
+    <form method="post" action="/add">
+				
+            <div class="col-sm-8 col-sm-offset-2">
+              
+              <div class="col">
+                  <label class="label">Email</label>
+                <input type="text" class="form-control" placeholder="Email" name="email">
+              </div>
+
+              <div class="col">
+                  <label class="label">Username</label>
+                <input type="text" class="form-control" placeholder="Username" name="username">
+              </div>
+
+              <div class="col">
+                  <label class="label">Age</label>
+                <input type="text" class="form-control" placeholder="Age" name="age">
+              </div>
+
+              <div class="col">
+                  <label class="label">Gender</label>
+                <input type="text" class="form-control" placeholder="0 là Nữ, 1 là Nam" name="gender">
+              </div>
+                  <hr>
+              <p class="text-center"><input class="btn btn-success" type="submit" value="Send"></p>
+            <%} %>
+
+            <% 
+            let index = users.findIndex(item => item.username == req.query.username) 
+            if(req.query.action == 'edit' && index != -1) {
+                %>
+                <h4 class="text-primary text-center">Sửa thông tin người dùng</h4>
+                <form method="post" action="/edit">
+                            
+                        <div class="col-sm-8 col-sm-offset-2">
+                          
+                          <div class="col">
+                              <label class="label">Email</label>
+                            <input value="<%= users[index].email %>" type="text" class="form-control" placeholder="Email" name="email">
+                          </div>
+            
+                          <div class="col">
+                              <label class="label">Username</label>
+                            <input type="text" value="<%= users[index].username %>" class="form-control" placeholder="Username" name="username">
+                          </div>
+            
+                          <div class="col">
+                              <label class="label">Age</label>
+                            <input type="text" class="form-control" value="<%= users[index].age %>" placeholder="Age" name="age">
+                          </div>
+            
+                          <div class="col">
+                              <label class="label">Gender</label>
+                            <input type="text" value="<%= users[index].gender %>" class="form-control" placeholder="0 là Nữ, 1 là Nam" name="gender">
+                          </div>
+                              <hr>
+                          <p class="text-center"><input class="btn btn-success" type="submit" value="Update"></p>
+                        <%} %>
+            
+
+
+            </div>
+          </form>
+</body>
+</html>

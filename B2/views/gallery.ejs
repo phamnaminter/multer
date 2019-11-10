@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<title></title>
+</head>
+<body>
+  <!-- Photo-->
+  <h1 class="text-center">Your Avatar:</h1>
+  <img style=" max-height: 300px;" class="col-md-6  mx-auto d-block" src="
+    <%=
+      avatar == null ? 'https://cdn5.vectorstock.com/i/1000x1000/73/49/404-error-page-not-found-miss-paper-with-white-vector-20577349.jpg' :'public/' + avatar
+    %>
+  " alt="Avatar">
+  <hr>	
+	<div class="row  justify-content-center">
+	<div class="input-group col-md-8">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+  </div>
+  <div class="custom-file">
+    <form action="/gallery?username=<%=username%>" method="post" enctype="multipart/form-data">
+    <input type="file" name="avatar" class="custom-file-input" id="inputGroupFile01"
+      aria-describedby="inputGroupFileAddon01">
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+    <hr>
+    <hr>
+    <div><button type="submit" class="btn btn-success">Upload</button></div>
+   
+</form>    
+</div>
+</div>
+</div>
+    <h2 style="margin-top: 60px"class="text-center text-primary">Thư viện của bạn</h2>
+  <div class="row" >
+    <% 
+      let length = gallery.length;
+      for(let i=0; i<length; i++){
+    %>
+    <div class="card col-md-4">
+      <img class="card-img-top" src="<%='public/' + gallery[i].filename%>" alt="Card image cap">
+      <div class="card-block">
+        <h4 class="card-title text-center"><%=gallery[i].originalname%></h4>
+        <p class="text-center"><a href="/gallery/delete?username=<%=username%>&filename=<%=gallery[i].filename%>" class="btn btn-danger">Delete</a></p>
+        <p class="text-center"><a href="/gallery/select-avatar?username=<%=username%>&filename=<%=gallery[i].filename%>" class="btn btn-success">Đặt làm Avatar</a></p>
+      </div>
+    </div>
+    <% } %>
+
+
+  </div>
+</body>
+</html>
